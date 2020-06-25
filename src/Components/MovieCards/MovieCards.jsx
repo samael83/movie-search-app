@@ -4,14 +4,17 @@ import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 
 import './MovieCards.css';
 
-export default function MovieCards({ movies }) {
+export default function MovieCards({ movies, alert }) {
 
 	if (movies.length === 0) {
 		return (
-			<p>No results</p>
+			<Alert variant={alert.varient}>
+				{alert.message}
+			</Alert>
 		);
 	}
 	return (
@@ -42,5 +45,6 @@ export default function MovieCards({ movies }) {
 
 MovieCards.propTypes = {
 	//movies: PropTypes.arrayOf(PropTypes.object).isRequired
-	movies: PropTypes.array.isRequired
+	movies: PropTypes.array.isRequired,
+	alert: PropTypes.object.isRequired
 };
