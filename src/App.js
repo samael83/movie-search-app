@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -8,14 +9,37 @@ import './App.css';
 
 export default function App() {
 
+  const [movies, setMovies] = useState([]);
   const [titleQuery, setTitleQuery] = useState('')
   const [titleType, setTitleType] = useState('all');
 
   const handleUserSearch = (e) => {
     // stop form submitting
     e.preventDefault(); 
-    console.log(titleQuery);
-    console.log(titleType);
+    
+    axios({
+      method: 'GET',
+      url: process.env.REACT_APP_ENDPOINT_OMDB,
+      params: {
+        apikey: process.env.REACT_APP_API_KEY_OMDB,
+        s: titleQuery,
+        type: titleType === 'all' ? '' : titleType
+      }
+    })
+    .then((res) => {
+      console.log(res);
+      if (res.data.Response === "True") {
+        // handle search results
+        setMovies(res.data.Search || []);
+      } else if (res.data.Error === "Movie not found!") {
+        // handle movie not found / no results
+        console.warn(res.data.Error);
+      } else {
+        // other type of error from api
+        console.error('No data from API');
+      }
+    })
+    .catch((err) => console.error(err));
   };
 
   return (
