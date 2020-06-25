@@ -10,8 +10,9 @@ import './App.css';
 export default function App() {
 
   const [movies, setMovies] = useState([]);
-  const [titleQuery, setTitleQuery] = useState('')
+  const [titleQuery, setTitleQuery] = useState('');
   const [titleType, setTitleType] = useState('all');
+  const [alert, setAlert] = useState({});
 
   const handleUserSearch = (e) => {
     // stop form submitting
@@ -28,16 +29,17 @@ export default function App() {
     })
     .then((res) => {
       console.log(res);
-      if (res.data.Response === "True") {
+      if (res.data.Response === 'True') {
         // handle search results
         setMovies(res.data.Search || []);
-      } else if (res.data.Error === "Movie not found!") {
+      } else if (res.data.Error === 'Movie not found!') {
         // handle movie not found / no results
-        console.warn(res.data.Error);
         setMovies([]);
+        setAlert({ varient: 'primary', message: 'No results found. Please check your spelling or try another search.' });
       } else {
         // other type of error from api
-        console.error('No data from API');
+        setMovies([]);
+        setAlert({ varient: 'danger', message: res.data.Error });
       }
     })
     .catch((err) => console.error(err));
