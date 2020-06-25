@@ -18,9 +18,9 @@ export default function MovieCards({ movies }) {
 		<Container>
 			<CardDeck>
 				{
-					movies.map((movie) => {
+					movies.map((movie, idx) => {
 						return (
-							<Col sm={4}>
+							<Col key={`movie-item-${idx}`} sm={4}>
 								<Card className="movie-card-item">
 									<Card.Img className="movie-card-pic" variant="top" src={movie.Poster} />
 									<Card.Body>
