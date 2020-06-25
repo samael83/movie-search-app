@@ -34,6 +34,7 @@ export default function App() {
       } else if (res.data.Error === "Movie not found!") {
         // handle movie not found / no results
         console.warn(res.data.Error);
+        setMovies([]);
       } else {
         // other type of error from api
         console.error('No data from API');
