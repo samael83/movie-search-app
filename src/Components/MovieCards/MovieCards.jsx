@@ -21,7 +21,7 @@ export default function MovieCards({ movies }) {
 					movies.map((movie, idx) => {
 						return (
 							<Col key={`movie-item-${idx}`} sm={4}>
-								<Card className="movie-card-item">
+								<Card className="movie-card-item" data-imdb-id={movie.imdbID} >
 									<Card.Img className="movie-card-pic" variant="top" src={movie.Poster} />
 									<Card.Body>
 										<Card.Title>{movie.Title}</Card.Title>
